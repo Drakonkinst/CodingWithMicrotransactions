@@ -1,0 +1,73 @@
+:root {
+  --light-color: #eee;
+  --dark-color: #151515;
+  --disabled-color: #aaa;
+  --flavor-color: #aaa;
+  --money-color: lime;
+  --money-disabled-color: #ed4337;
+  --bug-color: #ed4337;
+}
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  font-family: "Courier New", Courier, monospace;
+  background-color: var(--dark-color);
+  color: var(--light-color);
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* https://stackoverflow.com/questions/38428322/react-component-full-screen-with-height-100 */
+html,
+body,
+#app,
+#app > div,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+button[disabled] {
+  color: var(--light-color);
+}
+
+.flavor-text {
+  font-style: italic;
+  color: var(--flavor-color);
+  text-align: right;
+  font-size: 0.9em;
+}
+
+.flavor-text:before {
+  content: "“";
+}
+
+.flavor-text:after {
+  content: "”";
+}
+
+.bug-text {
+  color: var(--bug-color);
+}
+
+.money-text {
+  color: var(--money-color);
+}
+
+.money-text-disabled {
+  color: var(--money-disabled-color);
+}
