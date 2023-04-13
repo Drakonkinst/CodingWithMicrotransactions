@@ -1,4 +1,6 @@
-/* https://paladini.dev/posts/how-to-make-an-extremely-reusable-tooltip-component-with-react--and-nothing-else/ */
+/* BEGIN CODE FROM SOURCE: https://paladini.dev/posts/how-to-make-an-extremely-reusable-tooltip-component-with-react--and-nothing-else/ */
+/* Modified to adapt to project */
+
 /* Custom properties */
 :root {
   --tooltip-text-color: var(--light-color);
@@ -50,3 +52,5 @@
   top: 50%;
   transform: translateX(0) translateY(-50%);
 }
+
+/* END CODE FROM SOURCE: https://paladini.dev/posts/how-to-make-an-extremely-reusable-tooltip-component-with-react--and-nothing-else/ */

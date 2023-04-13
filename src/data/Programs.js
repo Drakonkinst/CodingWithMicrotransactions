@@ -1,3 +1,4 @@
+// A bunch of random code snippets to type in the editor
 export const PROGRAMS = [
   `
 function main() {
@@ -5,6 +6,8 @@ function main() {
 }
 main();
   `,
+  /* BEGIN CODE FROM SOURCE: https://github.com/dinanathsj29/javascript-exercise-beginners */
+  // Slightly modified to have less comments and fix styling
   `
 let value1 = 'one';
 let value2 = 'two';
@@ -114,9 +117,7 @@ function showStringProperties(curObj) {
   `,
   `
 function sumOfMultiples(curLimit) {
-
   let sumOfMultipleValue = 0;
-
   for(let i = 0; i <= curLimit; i++) {
     if(i % 3 === 0 || i % 5 === 0) {
       sumOfMultipleValue +=i;
@@ -198,5 +199,24 @@ function includes(arrayToSearch, elementToSearch) {
   }
   return false;
 }
+  `,
   `
+function excludes(arrayToExclude, elementsToExcluded) {
+  const outputArray = [];
+  for(let curElement of arrayToExclude) {
+    if(!elementsToExcluded.includes(curElement)) {
+      outputArray.push(curElement)
+    }
+  }
+  return outputArray;
+}
+  `,
+  `
+function getLargestNumber(arrayToSearch) {
+  return arrayToSearch.reduce((largetNumber, curentSearchElement) => {
+    return (curentSearchElement > largetNumber) ? curentSearchElement : largetNumber;
+  })
+}
+  `
+  /* END OF CODE FROM SOURCE: https://github.com/dinanathsj29/javascript-exercise-beginners */
 ];

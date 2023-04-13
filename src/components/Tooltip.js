@@ -1,3 +1,6 @@
+/* BEGIN CODE FROM SOURCE: https://paladini.dev/posts/how-to-make-an-extremely-reusable-tooltip-component-with-react--and-nothing-else/ */
+/* Modified to adapt to project */
+
 import React, { useState } from "react";
 import "../Tooltip.css";
 
@@ -34,3 +37,4 @@ export default function Tooltip(props) {
     </div>
   );
 }
+/* END CODE FROM SOURCE: https://paladini.dev/posts/how-to-make-an-extremely-reusable-tooltip-component-with-react--and-nothing-else/ */

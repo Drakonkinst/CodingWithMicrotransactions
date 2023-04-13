@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Tooltip from "./Tooltip";
 
+// The header above the code editor which displays statistics and
+// lets the user ship the current program
 export default function Controls({
   linesOfCode,
   bugs,
@@ -13,12 +15,14 @@ export default function Controls({
   programsShipped,
   onShipProgram
 }) {
+  // Bug text is in red if it is greater than 0
   const bugText =
     bugs > 0 ? (
       <strong className="bug-text">{bugs}</strong>
     ) : (
       <span>{bugs}</span>
     );
+
   return (
     <Wrapper>
       <StatColumn align="left">
@@ -161,6 +165,8 @@ function ShipItButton({
   programsShipped
 }) {
   const isDisabled = linesOfCode <= 0;
+
+  // Calculate display values for profit calculation
   const bugPenalty = Math.round((1 - bugMultiplier) * 100);
   const lineBonus = Math.round((bonusMultiplier - 1) * 100);
   const tooltip = (

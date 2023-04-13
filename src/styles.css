@@ -45,7 +45,8 @@ button[disabled] {
   color: var(--light-color);
 }
 
-.flavor-text {
+.flavor-text,
+.flavor-author-text {
   font-style: italic;
   color: var(--flavor-color);
   text-align: right;

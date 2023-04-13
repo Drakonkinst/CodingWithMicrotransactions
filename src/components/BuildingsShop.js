@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Tooltip from "./Tooltip";
 import { BUILDINGS } from "../data/Buildings";
 
+// UI to buy buildings (Variables, Functions, etc.)
 export default function BuildingsShop({
   money,
   totalRevenue,
@@ -63,8 +64,8 @@ const BuildingsList = styled.div`
     cursor: pointer;
 
     /* Prevent highlighting */
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10+ */
+    -webkit-user-select: none;
+    -ms-user-select: none;
     user-select: none;
   }
 
@@ -73,10 +74,8 @@ const BuildingsList = styled.div`
     font-weight: bold;
   }
 
-  /* Using a custom disabled class instead
-   * of the property so that tooltips still
-   * function (mouse events are disabled
-   * as well
+  /* Using a custom disabled class instead of the property
+   * so that tooltip mouse events still function
    */
   button.disabled {
     opacity: 0.8;
@@ -144,8 +143,12 @@ function Building({
   onPurchaseBuilding,
   hidden
 }) {
+  // Calculate price which increases over time
   const price = building.basePrice * Math.pow(1.15, count);
   const priceStr = "$" + price.toFixed(2);
+  const isDisabled = money < price;
+
+  // Calculate profit
   const numUpgrades = upgradesPurchased.filter((upgradeId) =>
     building.upgrades.includes(upgradeId)
   ).length;
@@ -161,8 +164,8 @@ function Building({
     (totalProfitPerLine < 0.01
       ? totalProfitPerLine.toFixed(3)
       : totalProfitPerLine.toFixed(2));
-  const isDisabled = money < price;
 
+  // Create tooltip
   const tooltip = hidden ? (
     <div className="building-tooltip">
       <h2 className="building-tooltip-title">???</h2>
@@ -198,11 +201,12 @@ function Building({
     </div>
   );
 
-  // https://upmostly.com/tutorials/how-to-use-media-queries-in-react
   // Need to refresh on resize since I'm not using an effect that
   // updates dynamically, but it's enough to help out on smaller screen devices.
+  /* BEGIN CODE FROM SOURCE: https://upmostly.com/tutorials/how-to-use-media-queries-in-react */
   const isLargeScreen = window.matchMedia("(min-width: 500px").matches;
   const tooltipDirection = isLargeScreen ? "left" : "bottom";
+  /* END CODE FROM SOURCE: https://upmostly.com/tutorials/how-to-use-media-queries-in-react */
 
   return (
     <li>

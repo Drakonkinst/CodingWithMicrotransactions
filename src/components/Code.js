@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import { PROGRAMS } from "../data/Programs";
 
+// The code editor
 export default function Code({ codeDisplay, typingSpeed, onType }) {
   const editorLines = codeDisplay.contents.split("\n").length;
+
+  // Create line number elements manually, with the line number as the key
   const lineNumbers = [];
   for (let i = 1; i <= editorLines; ++i) {
     const lineNumber = i + codeDisplay.linesOffScreen;

@@ -9,43 +9,46 @@ import { UPGRADES } from "./data/Upgrades";
 import { BUILDINGS } from "./data/Buildings";
 import { PROGRAMS } from "./data/Programs";
 
-export default function App() {
-  // Constants
-  const TYPING_UPGRADES = [
-    "typing1",
-    "typing2",
-    "typing3",
-    "typing4",
-    "typing5",
-    "typing6"
-  ];
-  const LINE_BONUS_UPGRADES = {
-    bonus1: 20,
-    bonus2: 40,
-    bonus3: 60,
-    bonus4: 80,
-    bonus5: 100,
-    bonus6: 120
-  };
-  const DEBUG_UPGRADES = {
-    bug1: 10,
-    bug2: 20,
-    bug3: 30,
-    bug4: 40,
-    bug5: 50,
-    bug6: 60
-  };
-  const BUILDING_UNLOCK_COUNTS = [1, 10, 15, 20, 25, 30];
+/* Constants */
+const TYPING_UPGRADES = [
+  "typing1",
+  "typing2",
+  "typing3",
+  "typing4",
+  "typing5",
+  "typing6"
+];
+// How many lines you need to write to get each bonus
+const LINE_BONUS_UPGRADES = {
+  bonus1: 20,
+  bonus2: 40,
+  bonus3: 60,
+  bonus4: 80,
+  bonus5: 100,
+  bonus6: 120
+};
+// Total number of buildings needed to get each upgrade
+const DEBUG_UPGRADES = {
+  bug1: 10,
+  bug2: 20,
+  bug3: 30,
+  bug4: 40,
+  bug5: 50,
+  bug6: 60
+};
+// Number of a specific building needed to unlock each upgrade
+const BUILDING_UNLOCK_COUNTS = [1, 10, 15, 20, 25, 30];
 
+export default function App() {
   // Lifetime stats
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [programsShipped, setProgramsShipped] = useState(0);
 
-  // Progression variables
+  // Progression
   const [bugs, setBugs] = useState(0);
   const [money, setMoney] = useState(0);
   const [upgradesUnlocked, setUpgradesUnlocked] = useState([
-    ...Object.keys(UPGRADES)
+    //...Object.keys(UPGRADES)
   ]);
   const [upgradesPurchased, setUpgradesPurchased] = useState([]);
   const [buildingCounts, setBuildingCounts] = useState({
@@ -54,20 +57,18 @@ export default function App() {
     function: 0,
     html: 0,
     css: 0,
-    react: 0,
-    data: 0
+    react: 0
   });
 
-  // Code editor state
-  // Lifted up so that other components can clear it
+  // Code editor state, lifted up so other components can clear it
   const [codeDisplay, setCodeDisplay] = useState({
     contents: "",
     linesOffScreen: 0,
     programIndex: 0,
     programCharacterIndex: 0
-    //bugPositions: []
   });
 
+  // Current news message
   const [newsMessage, setNewsMessage] = useState(
     generateNews(
       totalRevenue,
@@ -77,6 +78,7 @@ export default function App() {
     )
   );
 
+  // Add an upgrade to the store
   function unlockUpgrade(upgradeId) {
     if (
       upgradesPurchased.includes(upgradeId) ||
@@ -120,12 +122,14 @@ export default function App() {
     }
   }
 
+  // Counts how many of the given upgrade IDs are purchased
   function countPurchasedUpgrades(...upgradeList) {
     return upgradesPurchased.filter((upgradeId) =>
       upgradeList.includes(upgradeId)
     ).length;
   }
 
+  // Purchase a building
   function onPurchaseBuilding(building, price) {
     let newCount = buildingCounts[building.id] + 1;
 
@@ -157,28 +161,35 @@ export default function App() {
       }
     }
 
+    // Update state
     setBuildingCounts(newBuildingCounts);
     setMoney(money - price);
   }
 
-  // Only one upgrade can be purchased at
-  // a time, so can use normal mutating methods here
+  // Only one upgrade can be purchased at a time,
+  // so normal mutation can be used here
   function onPurchaseUpgrade(id) {
     const upgrade = UPGRADES[id];
+
+    // Remove it from upgradesUnlocked
     if (upgradesUnlocked.includes(id)) {
       setUpgradesUnlocked(
         upgradesUnlocked.filter((upgradeId) => upgradeId !== id)
       );
     }
+
+    // Add it to upgradesPurchased
     if (!upgradesPurchased.includes(id)) {
       const newList = [...upgradesPurchased, id];
       // Sort by id, which should group similar upgrades
       newList.sort((a, b) => a.localeCompare(b));
       setUpgradesPurchased(newList);
     }
+
     setMoney(money - upgrade.price);
   }
 
+  // When a line of code is added
   function onAddLine() {
     // Calculate total chance to generate a bug
     const baseBugChance = 0.05;
@@ -189,18 +200,18 @@ export default function App() {
     let totalChance =
       baseBugChance + compoundingBugChance + longProgramBugChance;
 
-    // Random chance to double bugs with ChatGPT
+    // Random chance to double bugs when using ChatGPT
     if (upgradesPurchased.includes("chatgpt") && Math.random() < 0.1) {
       totalChance *= 2;
     }
 
     // If totalChance > 1, break it into individual (at most 90%)
     // chances to generate a bug. Allows multiple bugs to be generated
-    // per line, but this will never overtake the number of lines.
-    const maxIndividualChance = 0.9;
+    // per line.
+    const MAX_INDIVIDUAL_CHANCE = 0.9;
     let newBugs = 0;
     do {
-      const individualChance = Math.min(maxIndividualChance, totalChance);
+      const individualChance = Math.min(MAX_INDIVIDUAL_CHANCE, totalChance);
       if (Math.random() < individualChance) {
         newBugs += 1;
       }
@@ -211,19 +222,25 @@ export default function App() {
     setBugs(bugs + newBugs);
   }
 
+  // When the user types anything
   function onType(event, newCodeDisplay) {
     const newLinesOfCode =
       newCodeDisplay.linesOffScreen +
       newCodeDisplay.contents.split("\n").length -
       1;
     const linesAdded = newLinesOfCode - linesOfCode;
+
+    // Call onAddLine for every line added
     for (let i = 0; i < linesAdded; ++i) {
       onAddLine();
     }
     setCodeDisplay(newCodeDisplay);
+    // Typing automatically scrolls the window,
+    // so there's not need to actually cancel the event
     // event.preventDefault();
   }
 
+  // When the "Ship It!" button is pressed
   function onShipProgram() {
     // Unlock upgrades based on line length
     for (const upgradeId in LINE_BONUS_UPGRADES) {
@@ -275,16 +292,20 @@ export default function App() {
       linesOffScreen: 0,
       programIndex: nextProgramIndex,
       programCharacterIndex: 0
-      //bugPositions: []
     });
     setBugs(0);
   }
+
+  // Calculate lines of code
   const linesOnScreen = codeDisplay.contents.split("\n").length - 1;
   const linesOfCode = linesOnScreen + codeDisplay.linesOffScreen;
+
+  // Calculate typing speed
   const typingSpeed =
     (1 + countPurchasedUpgrades(...TYPING_UPGRADES)) *
     (upgradesPurchased.includes("chatgpt") ? 2 : 1);
 
+  // Calculate profit per line
   let profitPerLine = 0.01;
   for (const building of BUILDINGS) {
     const bonusPerBuilding =
@@ -311,6 +332,7 @@ export default function App() {
     }
   }
 
+  // Calculate total profit
   const profit = Math.max(
     linesOfCode *
       profitPerLine *
@@ -318,6 +340,7 @@ export default function App() {
       longProgramBonusMultiplier,
     0
   );
+
   return (
     <Wrapper>
       <Game>
@@ -347,7 +370,6 @@ export default function App() {
             money={money}
             upgradesUnlocked={upgradesUnlocked}
             upgradesPurchased={upgradesPurchased}
-            buildingCounts={buildingCounts}
             onPurchaseUpgrade={onPurchaseUpgrade}
           ></UpgradesShop>
           <BuildingsShop

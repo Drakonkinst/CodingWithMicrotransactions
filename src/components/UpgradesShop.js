@@ -3,11 +3,11 @@ import Tooltip from "./Tooltip";
 import { UPGRADES } from "../data/Upgrades";
 import { useState } from "react";
 
+// UI to buy upgrades
 export default function UpgradesShop({
   money,
   upgradesUnlocked,
   upgradesPurchased,
-  buildingCounts,
   onPurchaseUpgrade
 }) {
   const [selectedUpgradeTab, setSelectedUpgradeTab] = useState("unlocked");
@@ -38,10 +38,7 @@ export default function UpgradesShop({
               <Upgrade
                 key={upgradeId}
                 upgradeId={upgradeId}
-                upgrade={UPGRADES[upgradeId]}
                 upgradesPurchased={upgradesPurchased}
-                upgradesUnlocked={upgradesUnlocked}
-                buildingCounts={buildingCounts}
                 money={money}
                 onPurchaseUpgrade={onPurchaseUpgrade}
               ></Upgrade>
@@ -53,10 +50,7 @@ export default function UpgradesShop({
               <Upgrade
                 key={upgradeId}
                 upgradeId={upgradeId}
-                upgrade={UPGRADES[upgradeId]}
                 upgradesPurchased={upgradesPurchased}
-                upgradesUnlocked={upgradesUnlocked}
-                buildingCounts={buildingCounts}
                 money={money}
                 onPurchaseUpgrade={onPurchaseUpgrade}
               ></Upgrade>
@@ -73,7 +67,15 @@ const UpgradesTabSelector = styled.div`
   display: flex;
 
   button {
+    color: var(--dark-color);
+    background-color: #ccc;
+    border-radius: 0;
     flex: 1;
+  }
+
+  button:disabled {
+    background-color: #666;
+    color: var(--light-color);
   }
 `;
 
@@ -102,14 +104,13 @@ const UpgradesList = styled.ul`
     cursor: pointer;
 
     /* Prevent highlighting */
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10+ */
+    -webkit-user-select: none;
+    -ms-user-select: none;
     user-select: none;
   }
 
   .upgrade.disabled {
     opacity: 0.5;
-    /* border: 2px solid gray; */
   }
 
   .upgrade:hover {
@@ -165,6 +166,10 @@ const UpgradesList = styled.ul`
     margin-bottom: 10px;
   }
 
+  .upgrade-tooltip-flavor {
+    text-align: right;
+  }
+
   @media (min-width: 500px) {
     margin: 0;
     width: 100%;
@@ -173,22 +178,19 @@ const UpgradesList = styled.ul`
   }
 `;
 
-function Upgrade({
-  upgradeId,
-  upgrade,
-  upgradesPurchased,
-  upgradesUnlocked,
-  buildingCounts,
-  money,
-  onPurchaseUpgrade
-}) {
+function Upgrade({ upgradeId, upgradesPurchased, money, onPurchaseUpgrade }) {
+  const upgrade = UPGRADES[upgradeId];
   const icon = upgrade.icon ?? "❓";
   // Subtract 0.01 from the price for marketing purposes
   const price = upgrade.price ? upgrade.price - 0.01 : 0;
   const priceStr = price > 0 ? "$" + price.toFixed(2) : "Free";
-  const canAfford = money >= (price ?? 0);
+  const canAfford = money >= price;
   const alreadyPurchased = upgradesPurchased.includes(upgradeId);
+
+  // Can only purchase if not already purchased and can afford
   const isDisabled = alreadyPurchased || !canAfford;
+
+  // Create tooltip
   const tooltip = (
     <div
       className="upgrade-tooltip"
@@ -212,7 +214,14 @@ function Upgrade({
       </header>
 
       <div className="upgrade-tooltip-description">{upgrade.description}</div>
-      {upgrade.flavor && <p className="flavor-text">{upgrade.flavor}</p>}
+      {upgrade.flavor && (
+        <p className="upgrade-tooltip-flavor">
+          <span className="flavor-text">{upgrade.flavor}</span>
+          {upgrade.flavorAuthor && (
+            <span className="flavor-author-text"> -{upgrade.flavorAuthor}</span>
+          )}
+        </p>
+      )}
     </div>
   );
 

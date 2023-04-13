@@ -1,3 +1,4 @@
+// All buildings in the game
 export const BUILDINGS = [
   {
     id: "variable",

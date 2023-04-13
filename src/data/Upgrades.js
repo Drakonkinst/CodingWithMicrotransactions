@@ -2,25 +2,16 @@ const TYPING_ICON = "⌨️";
 const VARIABLE_ICON = "💾";
 const FUNCTION_ICON = "📈";
 const COFFEE_ICON = "☕";
-const HTML_ICON = "🖼️"; //"✏️";
-const CSS_ICON = "🎨"; // "🖌️";
+const HTML_ICON = "🖼️";
+const CSS_ICON = "🎨";
 const REACT_ICON = "⚛️";
 
-// Palette Option 1
-//const COLOR_TIER_1 = "#aaaaaa";
+const COLOR_TIER_1 = "#eeeeee";
 const COLOR_TIER_2 = "#67de59";
 const COLOR_TIER_3 = "#5e6ee2";
 const COLOR_TIER_4 = "#de1ef6";
-// const COLOR_TIER_5 = "#ffc611";
-const COLOR_TIER_6 = "#ff033e";
-
-// Palette Option 2
-const COLOR_TIER_1 = "#eeeeee";
-// const COLOR_TIER_2 = "#1dff00";
-// const COLOR_TIER_3 = "#0070dd";
-// const COLOR_TIER_4 = "#a335ed";
 const COLOR_TIER_5 = "#ff8001";
-// const COLOR_TIER_6 = "#ff033e";
+const COLOR_TIER_6 = "#ff033e";
 
 const TIER_PRICES = {
   TYPING: [3, 15, 80, 475, 2560, 13500],
@@ -50,6 +41,7 @@ const BUG_DESCRIPTION = (
   </span>
 );
 
+// All upgrades in the game
 export const UPGRADES = {
   chatgpt: {
     name: "ChatGPT",
@@ -72,7 +64,8 @@ export const UPGRADES = {
     color: COLOR_TIER_1,
     price: TIER_PRICES.TYPING[0],
     description: TYPING_DESCRIPTION,
-    flavor: ""
+    flavor:
+      "Contrary to popular belief, you don't actually need to type quickly to be a good programmer. It might make you run into bugs faster, though."
   },
   typing2: {
     name: "Autocomplete",
@@ -80,7 +73,7 @@ export const UPGRADES = {
     color: COLOR_TIER_2,
     price: TIER_PRICES.TYPING[1],
     description: TYPING_DESCRIPTION,
-    flavor: ""
+    flavor: "Who needs to type everything out with tab completion on your side?"
   },
   typing3: {
     name: "Mechanical Keyboard",
@@ -149,7 +142,8 @@ export const UPGRADES = {
     color: COLOR_TIER_3,
     price: TIER_PRICES.BUG[2],
     description: BUG_DESCRIPTION,
-    flavor: ""
+    flavor:
+      "You could probably also use this to hack more money into the game, but that would make the developer sad :("
   },
   bug4: {
     name: "StackOverflow",
@@ -157,7 +151,8 @@ export const UPGRADES = {
     color: COLOR_TIER_4,
     price: TIER_PRICES.BUG[3],
     description: BUG_DESCRIPTION,
-    flavor: ""
+    flavor:
+      "I also encountered this problem. Edit: Nvm, figured it out. Here's a dead link to my solution. (thread locked)"
   },
   bug5: {
     name: "Documentation",
@@ -188,10 +183,12 @@ export const UPGRADES = {
         <strong>20% more.</strong>
       </span>
     ),
-    flavor: ""
+    flavor:
+      "The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect.",
+    flavorAuthor: "Tim Berners-Lee"
   },
   bonus2: {
-    name: "Responsiveness",
+    name: "Responsive Media Queries",
     icon: "📲",
     color: COLOR_TIER_2,
     price: TIER_PRICES.BONUS[1],
@@ -201,7 +198,8 @@ export const UPGRADES = {
         <strong>20% more.</strong>
       </span>
     ),
-    flavor: ""
+    flavor:
+      "Makes your app look great on any screen size, even if it jumbles around the layout a bit."
   },
   bonus3: {
     name: "User Testing",
@@ -214,7 +212,8 @@ export const UPGRADES = {
         <strong>20% more.</strong>
       </span>
     ),
-    flavor: ""
+    flavor:
+      "Here's a bright idea: what if instead of just assuming users want things to be a certain way, we ask them first?"
   },
   bonus4: {
     name: "Portfolio Website",
@@ -227,7 +226,8 @@ export const UPGRADES = {
         <strong>20% more.</strong>
       </span>
     ),
-    flavor: ""
+    flavor:
+      "You've made so many websites that you decide to make a another website to show them all off. Maybe don't put your first 'Hello World' program on this one."
   },
   bonus5: {
     name: "Personal Blog",
@@ -604,7 +604,8 @@ export const UPGRADES = {
         CSS Rules are <strong>20%</strong> more efficient.
       </span>
     ),
-    flavor: ""
+    flavor:
+      "Used to define special states during user interaction, and also sneak in a bit of logic to make CSS Turing-complete...somehow??"
   },
   css4: {
     name: "Flexboxes",
@@ -616,7 +617,8 @@ export const UPGRADES = {
         CSS Rules are <strong>20%</strong> more efficient.
       </span>
     ),
-    flavor: ""
+    flavor:
+      "It's the best thing since homemade cookies. Far more powerful than normal block displays, without the madness of CSS grid layouts."
   },
   css5: {
     name: "Keyframe Animations",
@@ -628,7 +630,8 @@ export const UPGRADES = {
         CSS Rules are <strong>20%</strong> more efficient.
       </span>
     ),
-    flavor: ""
+    flavor:
+      "Allows for more complex animations than transitions, like making a spider crawl across the screen."
   },
   cssDebug: {
     name: "Custom Properties",
@@ -636,7 +639,7 @@ export const UPGRADES = {
     color: COLOR_TIER_6,
     price: TIER_PRICES.CSS[5],
     description: DEBUG_DESCRIPTION,
-    flavor: ""
+    flavor: "Look, JavaScript! We can have reusable variables too!"
   },
 
   react1: {
@@ -649,7 +652,8 @@ export const UPGRADES = {
         React Components are <strong>20%</strong> more efficient.
       </span>
     ),
-    flavor: ""
+    flavor:
+      "Wraps your JSX in conditionals. Sometimes it's there, sometimes it's not."
   },
   react2: {
     name: "Styled Components",
@@ -661,7 +665,8 @@ export const UPGRADES = {
         React Components are <strong>20%</strong> more efficient.
       </span>
     ),
-    flavor: ""
+    flavor:
+      "Turns your styles into components, saving you the headaches of writing inline styles or keeping track of external stylesheets."
   },
   react3: {
     name: "State Update Reducers",
@@ -673,7 +678,8 @@ export const UPGRADES = {
         React Components are <strong>20%</strong> more efficient.
       </span>
     ),
-    flavor: ""
+    flavor:
+      "A fancy pattern to dispatch multiple state updates and then update it all in one go."
   },
   react4: {
     name: "Custom Hooks",
@@ -685,7 +691,8 @@ export const UPGRADES = {
         React Components are <strong>20%</strong> more efficient.
       </span>
     ),
-    flavor: ""
+    flavor:
+      "Stores custom logic beyond built-in Hooks and allows it to be re-used across components."
   },
   react5: {
     name: "Effects",
@@ -706,6 +713,7 @@ export const UPGRADES = {
     color: COLOR_TIER_6,
     price: TIER_PRICES.REACT[5],
     description: DEBUG_DESCRIPTION,
-    flavor: ""
+    flavor:
+      "Passes down state to nested children without needing too much 'prop drilling'. Very magical? Yes. Should you use it on everything? No."
   }
 };
