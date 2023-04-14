@@ -197,8 +197,19 @@ export default function App() {
     const compoundingBugChance = 0.02 * bugs;
     // Chance to generate a bug increases the more bugs there are
     const longProgramBugChance = 0.001 * linesOfCode;
+    // Chance is reduced by having bug upgrades
+    const numBugUpgrades = countPurchasedUpgrades(
+      "bug1",
+      "bug2",
+      "bug3",
+      "bug4",
+      "bug5",
+      "bug6"
+    );
+    const multiplier = 1 - 0.05 * numBugUpgrades;
     let totalChance =
-      baseBugChance + compoundingBugChance + longProgramBugChance;
+      (baseBugChance + compoundingBugChance + longProgramBugChance) *
+      multiplier;
 
     // Random chance to double bugs when using ChatGPT
     if (upgradesPurchased.includes("chatgpt") && Math.random() < 0.1) {
@@ -318,7 +329,17 @@ export default function App() {
   // Apply bug penalty
   const numberOfBugsPenalty = Math.pow(0.98, bugs);
   const percentageOfBugsPenalty = 1 - bugs / Math.max(linesOfCode, 1);
-  const bugPenaltyMultiplier = numberOfBugsPenalty * percentageOfBugsPenalty;
+  const numDebugUpgrades = countPurchasedUpgrades(
+    "variableDebug",
+    "functionDebug",
+    "coffeeDebug",
+    "htmlDebug",
+    "cssDebug",
+    "reactDebug"
+  );
+  const upgradeMultiplier = 1 / (1 - 0.05 * numDebugUpgrades);
+  const bugPenaltyMultiplier =
+    numberOfBugsPenalty * percentageOfBugsPenalty * upgradeMultiplier;
 
   // Apply long program bonus
   let longProgramBonusMultiplier = 1;
