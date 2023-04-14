@@ -338,8 +338,10 @@ export default function App() {
     "reactDebug"
   );
   const upgradeMultiplier = 1 / (1 - 0.05 * numDebugUpgrades);
-  const bugPenaltyMultiplier =
-    numberOfBugsPenalty * percentageOfBugsPenalty * upgradeMultiplier;
+  const bugPenaltyMultiplier = Math.min(
+    numberOfBugsPenalty * percentageOfBugsPenalty * upgradeMultiplier,
+    1
+  );
 
   // Apply long program bonus
   let longProgramBonusMultiplier = 1;
